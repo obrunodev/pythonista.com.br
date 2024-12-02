@@ -5,9 +5,9 @@
 {% block content %}
     <h1>Chatbot</h1>
 
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="question" placeholder="Pergunta" autocomplete="off">
-        <button type="submit">Enviar</button>
-    </form>
+    <div id="question-response"></div>
+
+    {% csrf_token %}
+    <input type="text" id="question" name="question" placeholder="Pergunta" autocomplete="off">
+    <button type="submit" onclick="getStreamResponse()">Enviar</button>
 {% endblock content %}

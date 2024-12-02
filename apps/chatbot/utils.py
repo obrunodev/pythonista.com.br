@@ -15,10 +15,12 @@ def get_chat_completion(messages, model='gpt-4o-mini'):
 
 
 def get_chat_completion_stream(messages, model='gpt-4o-mini'):
-    if model in gpt_models:
-        response = client.chat.completions.create(
-            model=model,
-            messages=messages,
-            stream=True,
-        )
-        return response.choices[0].message.content
+    for chunk in client.chat.completions.create(
+        model=model,
+        messages=messages,
+        stream=True,
+    ):
+        completion_text = chunk.choices[0].delta.content
+        if not completion_text:
+            continue
+        yield completion_text

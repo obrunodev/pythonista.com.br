@@ -1,5 +1,5 @@
-from apps.chatbot.utils import get_chat_completion
-from django.http import HttpResponse
+from apps.chatbot.utils import get_chat_completion_stream
+from django.http import StreamingHttpResponse
 from django.shortcuts import render
 
 
@@ -9,6 +9,9 @@ def index(request):
             {'role': 'system', 'content': 'Você é um assistente virtual que irá responder a perguntas do usuário.'},
             {'role': 'user', 'content': request.POST.get('question')},
         ]
-        response = get_chat_completion(messages)
-        return HttpResponse(response)
+        response = StreamingHttpResponse(get_chat_completion_stream(messages), content_type='text/event-stream')
+        response['X-Accel-Buffering'] = 'no'
+        response['Cache-Control'] = 'no-cache'
+        return response
+    
     return render(request, 'chatbot/index.html')
