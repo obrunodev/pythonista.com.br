@@ -4,4 +4,10 @@
 
 {% block content %}
     <h1>Chatbot</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="question" placeholder="Pergunta" autocomplete="off">
+        <button type="submit">Enviar</button>
+    </form>
 {% endblock content %}
