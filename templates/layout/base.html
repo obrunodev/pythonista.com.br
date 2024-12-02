@@ -5,10 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pythonista | {% block title %}{% endblock title %}</title>
+    <link rel="icon" type="image/x-icon" href="{% static "favicon.png" %}">
     <link rel="stylesheet" href="{% static 'vendors/bulma/css/bulma.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+    {% include "partials/navbar.html" %}
+
     {% block content %}{% endblock content %}
+
+    <script src="{% static "vendors/bulma/js/bulma.js" %}"></script>
 </body>
 </html>
