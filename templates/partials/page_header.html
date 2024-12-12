@@ -1,0 +1,17 @@
+<header class="page-header">
+    <h2>{{ page_section }}</h2>
+
+    <div class="right-wrapper text-end me-md-4">
+        <ol class="breadcrumbs">
+            <li>
+                <a href="index.html">
+                    <i class="bx bx-home-alt"></i>
+                </a>
+            </li>
+            {% if back_link %}
+                <li><span>{{ back_link }}</span></li>
+            {% endif %}
+            <li><span>{{ page_section }}</span></li>
+        </ol>
+    </div>
+</header>

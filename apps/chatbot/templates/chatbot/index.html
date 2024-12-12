@@ -3,11 +3,13 @@
 {% block title %}Chatbot{% endblock title %}
 
 {% block content %}
-    <h1>Chatbot</h1>
+    {% include "partials/page_header.html" with page_section="Chatbot" %}
 
     <div id="question-response"></div>
 
     {% csrf_token %}
-    <input type="text" id="question" name="question" placeholder="Pergunta" autocomplete="off">
-    <button type="submit" onclick="getStreamResponse()">Enviar</button>
+    <textarea name="question" id="question" placeholder="Digite a sua pergunta" class="form-control"></textarea>
+    <button type="submit" class="btn btn-primary mt-2" onclick="getStreamResponse()">
+        Enviar
+    </button>
 {% endblock content %}
