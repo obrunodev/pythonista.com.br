@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "pythonista-com-br"
+version = "0.1.0"
+description = ""
+authors = ["Bruno R. Pianca <brunorpdev@gmail.com>"]
+readme = "README.md"
+packages = [{include = "pythonista"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "==4.2.*"
+python-decouple = "^3.8"
+openai = "^1.57.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
