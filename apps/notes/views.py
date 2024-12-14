@@ -9,6 +9,13 @@ class NoteListView(ListView):
     context_object_name = 'notes'
 
 
+    def get_queryset(self):
+        query_set = super().get_queryset()
+        if query_param := self.request.GET.get('q'):
+            query_set = query_set.filter(title__icontains=query_param)
+        return query_set
+
+
 class NoteCreateView(CreateView):
     model = Note
     form_class = NoteForm
@@ -32,6 +39,7 @@ class NoteUpdateView(UpdateView):
 
 class NoteDeleteView(DeleteView):
     model = Note
+    context_object_name = 'note'
     
     def get_success_url(self):
         return reverse('notes:list')

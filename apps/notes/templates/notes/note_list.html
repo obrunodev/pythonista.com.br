@@ -11,13 +11,15 @@
     
     <div class="card">
         <div class="card-body">
-            <input type="text" placeholder="Digite o título ou conteúdo" class="form-control mb-2">
+            <form method="get">
+                <input type="text" name="q" placeholder="Digite o título ou conteúdo" class="form-control mb-2" value="{{ request.GET.q }}">
+            </form>
             <table class="table table-responsive-md table-striped">
                 <thead>
                     <tr>
                         <th>Título</th>
                         <th>Conteúdo</th>
-                        <th>Ações</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,10 +27,29 @@
                         <tr>
                             <td>{{ note.title|default:"Sem título" }}</td>
                             <td>{{ note.content|truncatechars:30 }}</td>
-                            <td>
+                            <td class="text-end">
                                 <a href="{% url "notes:detail" note.pk %}">
-                                    Ver mais
+                                    <i class='bx bx-show'></i>
                                 </a>
+                                <a href="{% url "notes:update" note.pk %}" class="ms-2">
+                                    <i class='bx bx-edit'></i>
+                                </a>
+                                <a href="{% url "notes:delete" note.pk %}" class="ms-2 text-danger">
+                                    <i class='bx bx-trash' ></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center">
+                                {% if request.GET.q %}
+                                    Nenhum resultado encontrado.
+                                {% else %}
+                                    Nenhuma anotação cadastrada.
+                                    <a href="{% url "notes:create" %}">
+                                        Criar uma anotação
+                                    </a>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

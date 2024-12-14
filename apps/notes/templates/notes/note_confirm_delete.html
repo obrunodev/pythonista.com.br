@@ -8,16 +8,17 @@
 
     <div class="card">
         <div class="card-body">
-            <h1>Confirmar</h1>
-
-            <p>Tem certeza que deseja excluir esta anotação?</p>
-
+            <h1 class="mt-1">Confirmar</h1>
+            <p>
+                Tem certeza que deseja excluir a anotação
+                <strong>{{ note.title|default:"Sem título" }}</strong>?
+            </p>
             <div class="d-flex">
                 <form method="post">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Confirmar</button>
+                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
                 </form>
-                <a href="{% url "notes:list" %}" class="btn btn-secondary ms-2">Cancelar</a>
+                <a href="{% url "notes:list" %}" class="btn btn-secondary btn-sm ms-2">Cancelar</a>
             </div>
         </div>
     </div>

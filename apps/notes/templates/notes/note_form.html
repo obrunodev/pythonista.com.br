@@ -11,7 +11,10 @@
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn btn-primary mt-2">Criar</button>
+                <button type="submit" class="btn btn-primary btn-sm mt-2">
+                    {% if note %}Atualizar{% else %}Salvar{% endif %}
+                </button>
+                <a href="{% url "notes:list" %}" class="btn btn-secondary btn-sm mt-2">Cancelar</a>
             </form>
         </div>
     </div>
