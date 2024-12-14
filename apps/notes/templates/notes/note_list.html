@@ -5,30 +5,36 @@
 {% block content %}
     {% include "partials/page_header.html" with page_section="Anotações" %}
 
-    <a href="#" class="btn btn-primary btn-sm mb-2">Nova anotação</a>
-
-    <input type="text" placeholder="Digite o título ou conteúdo" class="form-control mb-2">
-
-    <table class="table table-responsive-md table-striped">
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Conteúdo</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for note in notes %}
-                <tr>
-                    <td>{{ note.title|default:"Sem título" }}</td>
-                    <td>{{ note.content|truncatechars:30 }}</td>
-                    <td>
-                        <a href="#">
-                            Ver mais
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="d-flex justify-content-end">
+        <a href="{% url "notes:create" %}" class="btn btn-primary btn-sm mb-3">Nova anotação</a>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            <input type="text" placeholder="Digite o título ou conteúdo" class="form-control mb-2">
+            <table class="table table-responsive-md table-striped">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Conteúdo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for note in notes %}
+                        <tr>
+                            <td>{{ note.title|default:"Sem título" }}</td>
+                            <td>{{ note.content|truncatechars:30 }}</td>
+                            <td>
+                                <a href="{% url "notes:detail" note.pk %}">
+                                    Ver mais
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
 {% endblock content %}

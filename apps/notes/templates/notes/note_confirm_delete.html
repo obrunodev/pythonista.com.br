@@ -1,0 +1,25 @@
+{% extends "layout/base.html" %}
+
+{% block title %}Excluir anotação{% endblock title %}
+
+{% block content %}
+
+    {% include "partials/page_header.html" with page_section="Anotações" %}
+
+    <div class="card">
+        <div class="card-body">
+            <h1>Confirmar</h1>
+
+            <p>Tem certeza que deseja excluir esta anotação?</p>
+
+            <div class="d-flex">
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Confirmar</button>
+                </form>
+                <a href="{% url "notes:list" %}" class="btn btn-secondary ms-2">Cancelar</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
