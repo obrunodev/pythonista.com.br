@@ -28,11 +28,12 @@
                     {% for task in tasks %}
                         <tr>
                             <td>{{ task.title }}</td>
-                            <td><span class="badge badge-info">{{ task.status }}</span></td>
+                            <td><span class="badge badge-info">{{ task.get_status_display }}</span></td>
                             <td>{{ task.due_date|default:"Não definida" }}</td>
                             <td>
-                                <form action="" method="post">
+                                <form action="{% url "tasks:change_status" %}" method="post">
                                     {% csrf_token %}
+                                    <input type="hidden" name="task_id" value="{{ task.id }}">
                                     <button type="submit" class="btn btn-link p-0 text-decoration-none">
                                         {% if task.status == 'backlog' %}
                                             <input type="hidden" name="next_status" value="todo">
