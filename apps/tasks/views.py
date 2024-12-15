@@ -11,6 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = 'tasks'
+    paginate_by = 25
 
     def get_queryset(self):
         query_set = super().get_queryset()

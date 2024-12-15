@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class NoteListView(LoginRequiredMixin, ListView):
     model = Note
     context_object_name = 'notes'
+    paginate_by = 25
 
     def get_queryset(self):
         query_set = super().get_queryset()
