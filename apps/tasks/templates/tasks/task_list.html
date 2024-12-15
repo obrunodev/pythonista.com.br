@@ -28,7 +28,9 @@
                     {% for task in tasks %}
                         <tr>
                             <td>{{ task.title }}</td>
-                            <td><span class="badge badge-info">{{ task.get_status_display }}</span></td>
+                            <td>
+                                <span class="badge badge-{% if task.status == 'backlog' %}info{% elif task.status == 'development' %}warning{% elif task.status == 'done' %}success{% elif task.status == 'todo' %}primary{% endif %}">{{ task.get_status_display }}</span>
+                            </td>
                             <td>
                                 <form action="{% url "tasks:change_status" %}" method="post">
                                     {% csrf_token %}
