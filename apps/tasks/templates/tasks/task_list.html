@@ -19,8 +19,8 @@
                     <tr>
                         <th>Tarefa</th>
                         <th>Status</th>
-                        <th>Data de entrega</th>
                         <th>Alterar status</th>
+                        <th>Data de entrega</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -29,7 +29,6 @@
                         <tr>
                             <td>{{ task.title }}</td>
                             <td><span class="badge badge-info">{{ task.get_status_display }}</span></td>
-                            <td>{{ task.due_date|default:"Não definida" }}</td>
                             <td>
                                 <form action="{% url "tasks:change_status" %}" method="post">
                                     {% csrf_token %}
@@ -53,6 +52,7 @@
                                     </button>
                                 </form>
                             </td>
+                            <td>{{ task.due_date|default:"Não definida" }}</td>
                             <td class="text-end">
                                 <a href="{% url "tasks:detail" task.pk %}" class="ms-2">
                                     <i class='bx bx-show'></i>

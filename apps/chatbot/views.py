@@ -1,8 +1,10 @@
 from apps.chatbot.utils import get_chat_completion_stream
 from django.http import StreamingHttpResponse
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def index(request):
     if request.method == 'POST':
         messages = [

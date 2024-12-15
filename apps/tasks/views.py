@@ -4,9 +4,11 @@ from apps.tasks.forms import TaskForm
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class TaskListView(ListView):
+class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = 'tasks'
 
@@ -18,7 +20,7 @@ class TaskListView(ListView):
         return query_set
 
 
-class TaskCreateView(CreateView):
+class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
     
@@ -26,12 +28,12 @@ class TaskCreateView(CreateView):
         return reverse('tasks:list')
 
 
-class TaskDetailView(DetailView):
+class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
     context_object_name = 'task'
 
 
-class TaskUpdateView(UpdateView):
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
     form_class = TaskForm
     
@@ -39,7 +41,7 @@ class TaskUpdateView(UpdateView):
         return reverse('tasks:list')
 
 
-class TaskDeleteView(DeleteView):
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task
     context_object_name = 'task'
     
@@ -47,6 +49,7 @@ class TaskDeleteView(DeleteView):
         return reverse('tasks:list')
 
 
+@login_required
 def change_task_status(request):
     """
     Altera o status da tarefa de acordo com parâmetro enviado do frontend.
