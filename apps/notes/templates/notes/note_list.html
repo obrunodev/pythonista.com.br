@@ -19,6 +19,7 @@
                     <tr>
                         <th>Título</th>
                         <th>Conteúdo</th>
+                        <th>Tags</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -27,6 +28,11 @@
                         <tr>
                             <td>{{ note.title|default:"Sem título" }}</td>
                             <td>{{ note.content|truncatechars:30 }}</td>
+                            <td>
+                                {% for tag in note.tags.all %}
+                                    <span class="badge badge-{{ tag.color_class }}">{{ tag.name }}</span>
+                                {% endfor %}
+                            </td>
                             <td class="text-end">
                                 <a href="{% url "notes:detail" note.pk %}">
                                     <i class='bx bx-show'></i>

@@ -76,7 +76,7 @@
                     <img src="{% static "favicon.png" %}" alt="Joseph Doe" class="rounded-circle" data-lock-picture="img/!logged-user.jpg" />
                 </figure>
                 <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
-                    <span class="name">John Doe Junior</span>
+                    <span class="name">{{ user.get_full_name }}</span>
                     <span class="role">Administrator</span>
                 </div>
 
@@ -87,10 +87,10 @@
                 <ul class="list-unstyled mb-2">
                     <li class="divider"></li>
                     <li>
-                        <a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="bx bx-user-circle"></i> My Profile</a>
+                        <a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="bx bx-user-circle"></i> Perfil</a>
                     </li>
                     <li>
-                        <a role="menuitem" tabindex="-1" href="pages-signin.html"><i class="bx bx-power-off"></i> Logout</a>
+                        <a role="menuitem" tabindex="-1" href="pages-signin.html"><i class="bx bx-power-off"></i> Sair</a>
                     </li>
                 </ul>
             </div>
