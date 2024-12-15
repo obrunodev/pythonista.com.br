@@ -8,7 +8,6 @@ class NoteListView(ListView):
     model = Note
     context_object_name = 'notes'
 
-
     def get_queryset(self):
         query_set = super().get_queryset()
         if query_param := self.request.GET.get('q'):
