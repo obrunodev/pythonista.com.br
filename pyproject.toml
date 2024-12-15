@@ -12,6 +12,7 @@ django = "==4.2.*"
 python-decouple = "^3.8"
 openai = "^1.57.3"
 markdown = "^3.7"
+pygments = "^2.18.0"
 
 
 [build-system]

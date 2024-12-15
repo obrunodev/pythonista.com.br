@@ -1,8 +1,12 @@
 {% extends "layout/base.html" %}
 
+{% load render_md static %}
+
 {% block title %}{{ note.title }}{% endblock title %}
 
 {% block content %}
+
+    <link rel="stylesheet" type="text/css" href="{% static "css/codehilite.css" %}">
 
     {% include "partials/page_header.html" with page_section=note.title|default:"Sem título" %}
 
@@ -15,7 +19,7 @@
                 </a>
             </div>
 
-            {{ note.content }}
+            {{ note.content|render_markdown }}
         </div>
         <div class="card-footer">
             <a href="{% url "notes:delete" note.pk %}" class="btn btn-danger btn-sm">Excluir</a>
