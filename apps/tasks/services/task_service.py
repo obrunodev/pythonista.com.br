@@ -21,3 +21,13 @@ class TaskService:
             query_set = query_set.filter(title__icontains=query_param)
         
         return query_set
+    
+    @staticmethod
+    def set_next_task_status(query_set: QuerySet, next_status: str = None):
+        """Passa a tarefa para o próximo status"""
+        task = query_set.first()
+        if task and next_status:
+            task.status = next_status
+            task.save()
+            return True, 'success'
+        return False, 'error'

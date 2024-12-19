@@ -64,14 +64,10 @@ def change_task_status(request):
     """
     if request.method == 'POST':
         task_id = request.POST.get('task_id')
-        next_status = request.POST.get('next_status')
-        if next_status and task_id:
-            task = Task.objects.filter(id=task_id).first()
-            
-            if not task:
-                return redirect('tasks:list')
-            
-            task.status = next_status
-            task.save()
+
+        message, level = TaskService.set_next_task_status(
+            query_set=Task.objects.filter(id=task_id) if task_id else None,
+            next_status=request.POST.get('next_status')
+        )
         
         return redirect('tasks:list')
