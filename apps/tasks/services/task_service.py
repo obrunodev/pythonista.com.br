@@ -12,7 +12,10 @@ class TaskService:
         if filter_param:
             query_set = query_set.filter(status=filter_param)
         else:
-            query_set = query_set.exclude(status=Task.TaskStatus.DONE)
+            query_set = query_set.exclude(status__in=[
+                Task.TaskStatus.DONE,
+                Task.TaskStatus.BACKLOG,
+            ])
         
         if query_param:
             query_set = query_set.filter(title__icontains=query_param)
