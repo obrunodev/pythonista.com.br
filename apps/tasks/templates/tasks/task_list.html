@@ -12,7 +12,21 @@
     <div class="card">
         <div class="card-body">
             <form method="get">
-                <input type="text" name="q" placeholder="Digite o título" class="form-control mb-2" value="{{ request.GET.q }}">
+                <div class="row">
+                    <div class="col-md-7">
+                        <input type="text" name="q" placeholder="Digite o título" class="form-control mb-2" value="{{ request.GET.q }}">
+                    </div>
+                    <div class="col-md-3">
+                        <select name="f" class="form-select">
+                            {% for key, value in filter_params.items %}
+                                <option value="{{ key }}" {% if request.GET.f == key %}selected{% endif %}>{{ value }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </div>
+                </div>
             </form>
             <table class="table table-responsive-md table-striped">
                 <thead>

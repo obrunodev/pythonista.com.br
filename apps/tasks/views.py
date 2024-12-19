@@ -1,6 +1,8 @@
 
+from apps.tasks.helpers.context_helper import get_task_filter_context
 from apps.tasks.models import Task
 from apps.tasks.forms import TaskForm
+from apps.tasks.services.task_service import TaskService
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
@@ -13,12 +15,18 @@ class TaskListView(LoginRequiredMixin, ListView):
     context_object_name = 'tasks'
     paginate_by = 25
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_params'] = get_task_filter_context()
+        return context
+
     def get_queryset(self):
         query_set = super().get_queryset()
-        query_set = query_set.exclude(status=Task.TaskStatus.DONE)
-        if query_param := self.request.GET.get('q'):
-            query_set = query_set.filter(title__icontains=query_param)
-        return query_set
+        return TaskService.filter_tasks(
+            query_set=query_set,
+            query_param=self.request.GET.get('q'),
+            filter_param=self.request.GET.get('f')
+        )
 
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
