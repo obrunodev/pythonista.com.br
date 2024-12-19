@@ -16,6 +16,7 @@ class Task(BaseModel):
     due_date = models.DateField('Data de entrega', blank=True, null=True)
 
     class Meta:
+        ordering = ['status', 'due_date']
         verbose_name = 'Tarefa'
         verbose_name_plural = 'Tarefas'
 

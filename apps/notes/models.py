@@ -25,6 +25,7 @@ class Note(BaseModel):
     tags = models.ManyToManyField(NoteTag, blank=True)
 
     class Meta:
+        ordering = ['title']
         verbose_name = 'Anotação'
         verbose_name_plural = 'Anotações'
     
