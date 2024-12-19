@@ -12,7 +12,21 @@
     <div class="card">
         <div class="card-body">
             <form method="get">
-                <input type="text" name="q" placeholder="Digite o título ou conteúdo" class="form-control mb-2" value="{{ request.GET.q }}">
+                <div class="row">
+                    <div class="col-md-7">
+                        <input type="text" name="q" placeholder="Digite o título ou conteúdo" class="form-control mb-2" value="{{ request.GET.q }}">
+                    </div>
+                    <div class="col-md-3">
+                        <select name="f" class="form-select">
+                            {% for tag in tags_list %}
+                                <option value="{{ tag }}" {% if request.GET.f == tag %}selected{% endif %}>{{ tag }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </div>
+                </div>
             </form>
             <table class="table table-responsive-md table-striped">
                 <thead>
@@ -47,8 +61,8 @@
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="3" class="text-center">
-                                {% if request.GET.q %}
+                            <td colspan="4" class="text-center">
+                                {% if request.GET.q or request.GET.f %}
                                     Nenhum resultado encontrado.
                                 {% else %}
                                     Nenhuma anotação cadastrada.
