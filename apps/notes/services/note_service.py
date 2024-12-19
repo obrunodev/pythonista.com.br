@@ -1,4 +1,4 @@
-from django.db.models import QuerySet
+from django.db.models import Q, QuerySet
 
 
 class NoteService():
@@ -7,7 +7,9 @@ class NoteService():
     def filter_notes(query_set: QuerySet, query_param: str = None, filter_param: str = None) -> QuerySet:
         """Recebe parâmetros de busca e retorna anotações filtradas."""
         if query_param:
-            query_set = query_set.filter(title__icontains=query_param)
+            query_set = query_set.filter(
+                Q(title__icontains=query_param) | Q(content__icontains=query_param),
+            )
         
         if filter_param:
             query_set = query_set.filter(tags__name=filter_param)
