@@ -1,0 +1,20 @@
+{% extends "layout/base.html" %}
+
+{% block title %}Agentes IA{% endblock title %}
+
+{% block content %}
+
+    {% include "partials/page_header.html" with page_section="Agentes IA" %}
+
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary btn-sm mt-2">Criar agente</button>
+                <a href="{% url "chatbot:list" %}" class="btn btn-secondary btn-sm mt-2">Cancelar</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}

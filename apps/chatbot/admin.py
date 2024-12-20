@@ -1,3 +1,7 @@
+from apps.chatbot.models import AgentAI
 from django.contrib import admin
 
-# Register your models here.
+
+@admin.register(AgentAI)
+class AgentAIAdmin(admin.ModelAdmin):
+    ...
