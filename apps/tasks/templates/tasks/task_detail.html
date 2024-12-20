@@ -1,5 +1,7 @@
 {% extends "layout/base.html" %}
 
+{% load render_md %}
+
 {% block title %}{{ task.title }}{% endblock title %}
 
 {% block content %}
@@ -15,7 +17,9 @@
                 </a>
             </div>
 
-            {{ task.description }}
+            <h3>Descrição</h3>
+            
+            {{ task.description|render_markdown }}
         </div>
         <div class="card-footer">
             <a href="{% url "tasks:delete" task.pk %}" class="btn btn-danger btn-sm">Excluir</a>
