@@ -23,7 +23,7 @@
                     {% for agent in agents %}
                         <tr>
                             <td>{{ agent }}</td>
-                            <td class="text-end"><a href="#">Usar agente</a></td>
+                            <td class="text-end"><a href="{% url "chatbot:detail" agent.pk %}">Usar agente</a></td>
                         </tr>
                     {% empty %}
                         <tr><td colspan="2" class="text-center">Não há agentes cadastrados.</td></tr>

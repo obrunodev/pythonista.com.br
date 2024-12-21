@@ -16,3 +16,6 @@ class AgentAI(BaseModel):
     
     def __str__(self):
         return self.name
+    
+    def get_system_context(self):
+        return f'Uma descrição sobre você: { self.description }. Formas que deve agir: { self.prompts }'
