@@ -19,6 +19,9 @@ class AgentAI(BaseModel):
     
     def get_system_context(self):
         return f'Uma descrição sobre você: { self.description }. Formas que deve agir: { self.prompts }'
+    
+    def get_message_logs(self):
+        return self.agentaiconversationlog_set.all()[:10][::-1]
 
 
 class AgentAIConversationLog(BaseModel):

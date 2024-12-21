@@ -6,13 +6,19 @@
 
     {% include "partials/page_header.html" with page_section="Teste" %}
 
-    {{ agent.name }}
-
-    <div id="question-response"></div>
-    {% csrf_token %}
-    <textarea name="question" id="question" placeholder="Digite a sua pergunta" class="form-control"></textarea>
-    <button class="btn btn-primary mt-2" onclick="getStreamResponse('{% url "chatbot:get_agent_answer" agent.id %}', '{% url "chatbot:save_message" agent.id %}')">
-        Enviar
-    </button>
+    <div class="container">
+        <h3 class="text-center mb-3">{{ agent.name }}</h3>
+        <div id="message-logs">
+            {% for log in message_logs %}
+                <p class="message message-{{ log.role }}">{{ log.message }}</p>
+            {% endfor %}
+        </div>
+        <div id="question-response"></div>
+        {% csrf_token %}
+        <textarea name="question" id="question" placeholder="Digite a sua pergunta" class="form-control"></textarea>
+        <button class="btn btn-primary mt-2" onclick="getStreamResponse('{% url "chatbot:get_agent_answer" agent.id %}', '{% url "chatbot:save_message" agent.id %}')">
+            Enviar
+        </button>
+    </div>
 
 {% endblock content %}

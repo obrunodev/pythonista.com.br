@@ -1,1 +1,32 @@
-/* Add here all your CSS customizations */
+.message {
+    background-color: azure;
+    padding: 10px;
+    border-radius: 10px;
+}
+.message-user { margin-left: 50px; }
+.message-assistant {
+    background-color: aquamarine;
+    margin-right: 50px;
+}
+
+#message-logs {
+    max-height: 60vh; /* Limita a altura ao tamanho total da viewport */
+    overflow-y: auto; /* Adiciona barra de rolagem caso o conteúdo exceda a altura */
+    padding: 10px; /* Adiciona um espaçamento interno */
+    box-sizing: border-box; /* Inclui o padding dentro do cálculo de altura */
+    scrollbar-width: thin; /* Para navegadores Firefox */
+    scrollbar-color: #cccccc #f0f0f0; /* Cor da barra e do fundo */
+}
+
+#message-logs::-webkit-scrollbar {
+    width: 8px; /* Largura da barra de rolagem */
+}
+
+#message-logs::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Cor do fundo da barra */
+}
+
+#message-logs::-webkit-scrollbar-thumb {
+    background-color: #cccccc; /* Cor da barra de rolagem */
+    border-radius: 4px; /* Arredonda as bordas da barra */
+}

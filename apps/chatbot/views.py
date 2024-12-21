@@ -22,6 +22,11 @@ class AgentAIDetailView(DetailView):
     model = AgentAI
     context_object_name = 'agent'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['message_logs'] = context['agent'].get_message_logs()
+        return context
+
 
 class AgentAICreateView(LoginRequiredMixin, CreateView):
     model = AgentAI
