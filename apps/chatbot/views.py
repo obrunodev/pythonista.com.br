@@ -37,11 +37,20 @@ class AgentAICreateView(LoginRequiredMixin, CreateView):
 
 
 class AgentAIUpdateView(LoginRequiredMixin, UpdateView):
-    ...
+    model = AgentAI
+    form_class = AgentAIForm
+    context_object_name = 'agent'
+
+    def get_success_url(self):
+        return reverse('chatbot:list')
 
 
 class AgentAIDeleteView(LoginRequiredMixin, DeleteView):
-    ...
+    model = AgentAI
+    context_object_name = 'agent'
+
+    def get_success_url(self):
+        return reverse('chatbot:list')
 
 
 @login_required

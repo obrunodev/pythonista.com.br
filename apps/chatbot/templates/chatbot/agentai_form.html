@@ -11,7 +11,9 @@
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn btn-primary btn-sm mt-2">Criar agente</button>
+                <button type="submit" class="btn btn-primary btn-sm mt-2">
+                    {% if agent %}Atualizar agente{% else %}Criar agente{% endif %}
+                </button>
                 <a href="{% url "chatbot:list" %}" class="btn btn-secondary btn-sm mt-2">Cancelar</a>
             </form>
         </div>

@@ -1,0 +1,27 @@
+{% extends "layout/base.html" %}
+
+{% block title %}Excluir agente{% endblock title %}
+
+{% block content %}
+
+    {% include "partials/page_header.html" with page_section="Agente IA" %}
+
+    <div class="card">
+        <div class="card-body">
+            <h1 class="mt-1">Confirmar</h1>
+            <p>
+                Tem certeza que deseja excluir o chatbot
+                <strong>{{ agent.name|default:"Sem título" }}</strong>?
+            </p>
+            <p class="form-text text-danger">Todo o histórico desse agente será perdido</p>
+            <div class="d-flex">
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                </form>
+                <a href="{% url "chatbot:list" %}" class="btn btn-secondary btn-sm ms-2">Cancelar</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
