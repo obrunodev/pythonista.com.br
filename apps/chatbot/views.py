@@ -75,8 +75,10 @@ def agent_ai_answer(request, agent_id):
             )
 
         system_context = agent.get_system_context()
+        message_logs = agent.get_list_messages()
         messages = [
             {'role': 'system', 'content': system_context},
+            *message_logs,
             {'role': 'user', 'content': question},
         ]
         response = StreamingHttpResponse(get_chat_completion_stream(messages), content_type='text/event-stream')
