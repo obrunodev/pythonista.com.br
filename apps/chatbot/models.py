@@ -19,3 +19,19 @@ class AgentAI(BaseModel):
     
     def get_system_context(self):
         return f'Uma descrição sobre você: { self.description }. Formas que deve agir: { self.prompts }'
+
+
+class AgentAIConversationLog(BaseModel):
+    agent = models.ForeignKey(AgentAI, on_delete=models.CASCADE)
+    role = models.CharField(max_length=20)
+    message = models.TextField()
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Histórico de conversa'
+        verbose_name_plural = 'Históricos de conversa'
+    
+    def __str__(self):
+        return '%s - %s: %s' % (
+            self.agent, self.role, self.message
+        )

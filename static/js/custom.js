@@ -1,4 +1,4 @@
-async function getStreamResponse(url) {
+async function getStreamResponse(url, saveUrl) {
     const question = document.getElementById('question');
     let responseField = document.getElementById('question-response');
     responseField.innerHTML = 'Pensando...';
@@ -15,7 +15,15 @@ async function getStreamResponse(url) {
     const reader = response.body.getReader();
     while (true) {
         const { done, value } = await reader.read();
-        if (done) { break; }
+        if (done) {
+            data.append('response', responseField.innerHTML);
+            await fetch(saveUrl, {
+                method: 'POST',
+                body: data,
+                credentials: 'same-origin'
+            })
+            break;
+        }
         const decodedValue = new TextDecoder("utf-8").decode(value);
         responseField.innerHTML += decodedValue;
     }

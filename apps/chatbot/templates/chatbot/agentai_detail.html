@@ -11,7 +11,7 @@
     <div id="question-response"></div>
     {% csrf_token %}
     <textarea name="question" id="question" placeholder="Digite a sua pergunta" class="form-control"></textarea>
-    <button class="btn btn-primary mt-2" onclick="getStreamResponse('{% url "chatbot:get_agent_answer" agent.id %}')">
+    <button class="btn btn-primary mt-2" onclick="getStreamResponse('{% url "chatbot:get_agent_answer" agent.id %}', '{% url "chatbot:save_message" agent.id %}')">
         Enviar
     </button>
 

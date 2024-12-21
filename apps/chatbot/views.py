@@ -1,5 +1,5 @@
 from apps.chatbot.forms import AgentAIForm
-from apps.chatbot.models import AgentAI
+from apps.chatbot.models import AgentAI, AgentAIConversationLog
 from apps.chatbot.utils import get_chat_completion_stream
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -59,15 +59,42 @@ def agent_ai_answer(request, agent_id):
     Constrói o prompt da IA e recebe a resposta em streaming.
     """
     if request.method == 'POST':
+        question = request.POST.get('question')
         agent = AgentAI.objects.filter(id=agent_id).first()
+
+        if question and agent:
+            AgentAIConversationLog.objects.create(
+                agent=agent,
+                message=question,
+                role='user',
+            )
+
         system_context = agent.get_system_context()
         messages = [
             {'role': 'system', 'content': system_context},
-            {'role': 'user', 'content': request.POST.get('question')},
+            {'role': 'user', 'content': question},
         ]
         response = StreamingHttpResponse(get_chat_completion_stream(messages), content_type='text/event-stream')
         response['X-Accel-Buffering'] = 'no'
         response['Cache-Control'] = 'no-cache'
         return response
+    else:
+        return HttpResponse(status=405)
+
+
+@login_required
+def save_message(request, agent_id):
+    """
+    Salva uma mensagem como histórico no banco de dados.
+    """
+    if request.method == 'POST':
+        response = request.POST.get('response')
+        agent = AgentAI.objects.filter(id=agent_id).first()
+        if response:
+            AgentAIConversationLog.objects.create(
+                agent=agent,
+                message=response,
+                role='assistant',
+            )
     else:
         return HttpResponse(status=405)
