@@ -4,7 +4,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 DEBUG = True
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost', 'xwaqen.hospedagemelastica.com.br', 'pythonista.com.br']
+CSRF_TRUSTED_ORIGINS = ['https://xwaqen.hospedagemelastica.com.br', 'https://pythonista.com.br']
 
 INSTALLED_APPS = [
     'apps.users',
