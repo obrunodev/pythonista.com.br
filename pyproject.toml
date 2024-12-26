@@ -13,6 +13,7 @@ python-decouple = "^3.8"
 openai = "^1.57.3"
 markdown = "^3.7"
 pygments = "^2.18.0"
+gunicorn = "^23.0.0"
 
 
 [build-system]

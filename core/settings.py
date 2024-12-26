@@ -3,7 +3,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('DJANGO_SECRET_KEY')
-DEBUG = True
+DEBUG = config('DEBUG', True)
 ALLOWED_HOSTS = ['localhost', 'xwaqen.hospedagemelastica.com.br', 'pythonista.com.br']
 CSRF_TRUSTED_ORIGINS = ['https://xwaqen.hospedagemelastica.com.br', 'https://pythonista.com.br']
 
@@ -67,13 +67,18 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
+USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'tasks:list'
 LOGOUT_REDIRECT_URL = 'tasks:list'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
