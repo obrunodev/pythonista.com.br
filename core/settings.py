@@ -3,7 +3,8 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('DJANGO_SECRET_KEY')
-DEBUG = config('DEBUG', True)
+DEBUG = True
+if config('ENV') == 'prod': DEBUG = False
 ALLOWED_HOSTS = ['localhost', 'xwaqen.hospedagemelastica.com.br', 'pythonista.com.br']
 CSRF_TRUSTED_ORIGINS = ['https://xwaqen.hospedagemelastica.com.br', 'https://pythonista.com.br']
 
