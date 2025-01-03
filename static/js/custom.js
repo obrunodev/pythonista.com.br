@@ -3,13 +3,13 @@ async function getStreamResponse(url, saveUrl) {
     const messageLogs = document.getElementById('message-logs');
 
     // Adiciona a pergunta ao histórico de mensagens
-    const userMessage = document.createElement('p');
+    const userMessage = document.createElement('div');
     userMessage.className = 'message message-user';
     userMessage.textContent = question.value;
     messageLogs.appendChild(userMessage);
 
     // Cria um placeholder para a resposta do assistente
-    const assistantMessage = document.createElement('p');
+    const assistantMessage = document.createElement('div');
     assistantMessage.className = 'message message-assistant';
     assistantMessage.textContent = 'Pensando...';
     messageLogs.appendChild(assistantMessage);

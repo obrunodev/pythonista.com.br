@@ -1,5 +1,7 @@
 {% extends "layout/base.html" %}
 
+{% load render_md %}
+
 {% block title %}Agente IA{% endblock title %}
 
 {% block content %}
@@ -9,7 +11,9 @@
     <div class="container">
         <div id="message-logs">
             {% for log in message_logs %}
-                <p class="message message-{{ log.role }}">{{ log.message }}</p>
+                <div class="message message-{{ log.role }} my-2 py-2">
+                    {{ log.message|render_markdown }}
+                </div>
             {% endfor %}
         </div>
         <div id="question-response"></div>
