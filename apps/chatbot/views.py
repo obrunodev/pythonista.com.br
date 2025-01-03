@@ -103,5 +103,6 @@ def save_message(request, agent_id):
                 message=response,
                 role='assistant',
             )
+        return HttpResponse(status=201)
     else:
         return HttpResponse(status=405)
