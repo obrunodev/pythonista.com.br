@@ -1,0 +1,71 @@
+{% extends "layout/base.html" %}
+
+{% block title %}Transações{% endblock title %}
+
+{% block content %}
+
+    {% include "partials/page_header.html" with page_section="Transações" %}
+
+    <div class="d-flex justify-content-end">
+        <a href="{% url "finance:transaction_create" %}" class="btn btn-primary btn-sm mb-3">Nova transação</a>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-responsive-md table-striped">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                        <th>Data de vencimento</th>
+                        <th>Categoria</th>
+                        <th>Tipo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.description|truncatechars:30 }}</td>
+                            <td>R$ {{ transaction.value }}</td>
+                            <td>
+                                {% if transaction.is_permanent %}
+                                    Permanente
+                                {% else %}
+                                    {{ transaction.due_date|default:"Sem data de vencimento" }}
+                                {% endif %}
+                            </td>
+                            <td>{{ transaction.category }}</td>
+                            <td class="text-{% if transaction.transaction_type == 'expense' %}danger{% else %}success{% endif %}">
+                                {{ transaction.get_transaction_type_display }}
+                            </td>
+                            <td class="text-end">
+                                <a href="#" class="ms-2">
+                                    <i class='bx bx-edit'></i>
+                                </a>
+                                <a href="#" class="ms-2 text-danger">
+                                    <i class='bx bx-trash' ></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                {% if request.GET.q or request.GET.f %}
+                                    Nenhum resultado encontrado.
+                                {% else %}
+                                    Nenhuma transação cadastrada.
+                                    <a href="{% url "finance:transaction_create" %}">
+                                        Criar uma transação
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% include "partials/pagination.html" %}
+        </div>
+    </div>
+
+{% endblock content %}

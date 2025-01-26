@@ -27,13 +27,15 @@
                         </a>
                         <ul class="nav nav-children">
                             <li>
-                                <a class="nav-link" href="ecommerce-dashboard.html">
-                                    Despesas
+                                <a class="nav-link" href="{% url "finance:transaction_list" %}">
+                                    Transações
                                 </a>
                             </li>
+                        </ul>
+                        <ul class="nav nav-children">
                             <li>
-                                <a class="nav-link disabled" href="#">
-                                    Inativo
+                                <a class="nav-link" href="{% url "finance:debt_list" %}">
+                                    Dívidas
                                 </a>
                             </li>
                         </ul>
