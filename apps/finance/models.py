@@ -45,6 +45,7 @@ class Debt(BaseModel):
         for i in range(self.installment_count):
             due_date = self.first_due_date + relativedelta(months=i)
             transaction = Transaction(
+                debt=self,
                 transaction_type=Transaction.TransactionType.EXPENSE,
                 value=installment_value,
                 description=f'Parcela {i + 1}/{self.installment_count} - {self.description}',
@@ -64,6 +65,7 @@ class Transaction(BaseModel):
     
     debt = models.ForeignKey(Debt, on_delete=models.CASCADE, blank=True, null=True)
     is_permanent = models.BooleanField('É permanente?', default=False)
+    is_paid = models.BooleanField('Está pago?', default=False)
     transaction_type = models.CharField('Tipo', max_length=7, choices=TransactionType.choices)
     value = models.DecimalField('Valor', max_digits=10, decimal_places=2)
     description = models.CharField('Descrição da transação', max_length=255, blank=True, null=True)

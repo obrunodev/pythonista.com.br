@@ -30,6 +30,7 @@
                         <th>Data de vencimento</th>
                         <th>Categoria</th>
                         <th>Tipo</th>
+                        <th>Pago</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -48,6 +49,13 @@
                             <td>{{ transaction.category }}</td>
                             <td class="text-{% if transaction.transaction_type == 'expense' %}danger{% else %}success{% endif %}">
                                 {{ transaction.get_transaction_type_display }}
+                            </td>
+                            <td>
+                                {% if transaction.is_paid %}
+                                    <span class="badge badge-success">S</span>
+                                {% else %}
+                                    <span class="badge badge-danger">N</span>
+                                {% endif %}
                             </td>
                             <td class="text-end">
                                 <a href="#" class="ms-2">

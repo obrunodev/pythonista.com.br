@@ -1,6 +1,7 @@
 from apps.finance.forms import DebtForm, TransactionForm
 from apps.finance.models import Debt, Transaction
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count, Q
 from django.views.generic import ListView, CreateView
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -43,6 +44,16 @@ class DebtListView(ListView):
     model = Debt
     context_object_name = 'debts'
     paginate_by = 20
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.annotate(
+            paid_transactions_count=Count(
+                'transaction',
+                filter=Q(transaction__is_paid=True)
+            )
+        )
+        return qs
 
 
 class DebtCreateView(CreateView):

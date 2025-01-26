@@ -1,10 +1,10 @@
 {% extends "layout/base.html" %}
 
-{% block title %}Transações{% endblock title %}
+{% block title %}Dívidas{% endblock title %}
 
 {% block content %}
 
-    {% include "partials/page_header.html" with page_section="Transações" %}
+    {% include "partials/page_header.html" with page_section="Dívidas" %}
 
     <div class="d-flex justify-content-end">
         <a href="{% url "finance:debt_create" %}" class="btn btn-primary btn-sm mb-3">Nova dívida</a>
@@ -27,7 +27,7 @@
                         <tr>
                             <td>{{ debt.description|truncatechars:30 }}</td>
                             <td>R$ {{ debt.total_value }}</td>
-                            <td></td>
+                            <td>{{ debt.paid_transactions_count }}/{{ debt.installment_count }}</td>
                             <td>{{ debt.category }}</td>
                             <td class="text-end">
                                 <a href="#" class="ms-2">
