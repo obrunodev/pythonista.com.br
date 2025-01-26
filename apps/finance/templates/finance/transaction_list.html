@@ -12,6 +12,16 @@
     
     <div class="card">
         <div class="card-body">
+            <div class="nav-month d-flex align-items-end">
+                <a href="{% url "finance:transaction_list" %}?{{ change_month_href.previous }}" class="h4 me-2">
+                    <i class='bx bxs-caret-left-square'></i>
+                </a>
+                <p>{{ change_month_href.actual }}</p>
+                <a href="{% url "finance:transaction_list" %}?{{ change_month_href.next }}" class="h4 ms-2">
+                    <i class='bx bxs-caret-right-square'></i>
+                </a>
+            </div>
+
             <table class="table table-responsive-md table-striped">
                 <thead>
                     <tr>

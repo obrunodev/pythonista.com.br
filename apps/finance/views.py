@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView
 from django.urls import reverse_lazy
 from django.utils import timezone
+from shared.mappings import months_mapping
 
 
 class TransactionListView(LoginRequiredMixin, ListView):
@@ -13,10 +14,23 @@ class TransactionListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         timezone_now = timezone.now()
+        selected_month = timezone_now.month if not self.request.GET.get('month') else int(self.request.GET.get('month'))
+        selected_year = timezone_now.year if not self.request.GET.get('year') else int(self.request.GET.get('year'))
         return Transaction.objects.filter(
-            due_date__month=timezone_now.month,
-            due_date__year=timezone_now.year,
+            due_date__month=selected_month,
+            due_date__year=selected_year,
         )
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        selected_month = timezone.now().month if not self.request.GET.get('month') else int(self.request.GET.get('month'))
+        selected_year = timezone.now().year if not self.request.GET.get('year') else int(self.request.GET.get('year'))
+        context['change_month_href'] = {
+            'previous': f'month=12&year={ selected_year - 1 }' if selected_month == 1 else f'month={ selected_month - 1}&year={ selected_year }',
+            'actual': f'{months_mapping[selected_month]} de {selected_year}',
+            'next': f'month=1&year={ selected_year + 1 }' if selected_month == 12 else f'month={ selected_month + 1}&year={ selected_year }',
+        }
+        return context
 
 
 class TransactionCreateView(LoginRequiredMixin, CreateView):
