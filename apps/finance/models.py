@@ -1,5 +1,6 @@
 from core.models import BaseModel
 from django.db import models
+from dateutil.relativedelta import relativedelta
 
 
 class TransactionCategory(BaseModel):
@@ -35,6 +36,24 @@ class Debt(BaseModel):
     
     def __str__(self):
         return self.description
+    
+    def generate_transations(self):
+        """Gera as transações para cada parcela da dívida"""
+        installment_value = self.total_value / self.installment_count
+        transactions = []
+
+        for i in range(self.installment_count):
+            due_date = self.first_due_date + relativedelta(months=i)
+            transaction = Transaction(
+                transaction_type=Transaction.TransactionType.EXPENSE,
+                value=installment_value,
+                description=f'Parcela {i + 1}/{self.installment_count} - {self.description}',
+                category=self.category,
+                due_date=due_date,
+            )
+            transactions.append(transaction)
+        
+        Transaction.objects.bulk_create(transactions)
 
 
 class Transaction(BaseModel):

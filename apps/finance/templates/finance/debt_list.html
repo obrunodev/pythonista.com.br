@@ -7,7 +7,7 @@
     {% include "partials/page_header.html" with page_section="Transações" %}
 
     <div class="d-flex justify-content-end">
-        <a href="{% url "finance:debt_list" %}" class="btn btn-primary btn-sm mb-3">Nova dívida</a>
+        <a href="{% url "finance:debt_create" %}" class="btn btn-primary btn-sm mb-3">Nova dívida</a>
     </div>
     
     <div class="card">
@@ -16,19 +16,19 @@
                 <thead>
                     <tr>
                         <th>Descrição</th>
-                        <th>Valor</th>
+                        <th>Valor total</th>
                         <th>Parcelas pagas</th>
                         <th>Categoria</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for transaction in transactions %}
+                    {% for debt in debts %}
                         <tr>
-                            <td>{{ transaction.description|truncatechars:30 }}</td>
-                            <td>R$ {{ transaction.value }}</td>
-                            <td>{{ transaction.due_date }}</td>
-                            <td>{{ transaction.category }}</td>
+                            <td>{{ debt.description|truncatechars:30 }}</td>
+                            <td>R$ {{ debt.total_value }}</td>
+                            <td></td>
+                            <td>{{ debt.category }}</td>
                             <td class="text-end">
                                 <a href="#" class="ms-2">
                                     <i class='bx bx-edit'></i>
