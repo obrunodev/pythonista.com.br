@@ -12,14 +12,22 @@
     
     <div class="card">
         <div class="card-body">
-            <div class="nav-month d-flex align-items-end">
-                <a href="{% url "finance:transaction_list" %}?{{ change_month_href.previous }}" class="h4 me-2">
-                    <i class='bx bxs-caret-left-square'></i>
-                </a>
-                <p>{{ change_month_href.actual }}</p>
-                <a href="{% url "finance:transaction_list" %}?{{ change_month_href.next }}" class="h4 ms-2">
-                    <i class='bx bxs-caret-right-square'></i>
-                </a>
+            <div class="d-flex justify-content-between">
+                <div class="nav-month d-flex align-items-end">
+                    <a href="{% url "finance:transaction_list" %}?{{ change_month_href.previous }}" class="h4 me-2">
+                        <i class='bx bxs-caret-left-square'></i>
+                    </a>
+                    <p>{{ change_month_href.actual }}</p>
+                    <a href="{% url "finance:transaction_list" %}?{{ change_month_href.next }}" class="h4 ms-2">
+                        <i class='bx bxs-caret-right-square'></i>
+                    </a>
+                </div>
+    
+                <div class="d-flex justify-content-end">
+                    <span class="badge badge-success">
+                        <h4>Saldo: R$ {{ month_balance }}</h4>
+                    </span>
+                </div>
             </div>
 
             <table class="table table-responsive-md table-striped">
@@ -41,7 +49,7 @@
                             <td>R$ {{ transaction.value }}</td>
                             <td>
                                 {% if transaction.is_permanent %}
-                                    Permanente
+                                    Recorrente
                                 {% else %}
                                     {{ transaction.due_date|default:"Sem data de vencimento" }}
                                 {% endif %}

@@ -9,7 +9,7 @@ class DebtAdmin(admin.ModelAdmin):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    ...
+    list_display = ['description', 'category', 'value', 'due_date']
 
 
 @admin.register(TransactionCategory)

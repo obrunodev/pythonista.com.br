@@ -18,8 +18,8 @@ class TransactionListView(LoginRequiredMixin, ListView):
         selected_month = timezone_now.month if not self.request.GET.get('month') else int(self.request.GET.get('month'))
         selected_year = timezone_now.year if not self.request.GET.get('year') else int(self.request.GET.get('year'))
         return Transaction.objects.filter(
-            due_date__month=selected_month,
-            due_date__year=selected_year,
+            Q(due_date__month=selected_month, due_date__year=selected_year) |
+            Q(is_permanent=True),
         )
     
     def get_context_data(self, **kwargs):
@@ -31,6 +31,11 @@ class TransactionListView(LoginRequiredMixin, ListView):
             'actual': f'{months_mapping[selected_month]} de {selected_year}',
             'next': f'month=1&year={ selected_year + 1 }' if selected_month == 12 else f'month={ selected_month + 1}&year={ selected_year }',
         }
+        month_balance = 0
+        for t in self.get_queryset():
+            if t.transaction_type == 'expense': month_balance -= t.value
+            else: month_balance += t.value
+        context['month_balance'] = month_balance
         return context
 
 
