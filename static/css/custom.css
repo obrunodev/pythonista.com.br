@@ -30,3 +30,20 @@
     background-color: #cccccc; /* Cor da barra de rolagem */
     border-radius: 4px; /* Arredonda as bordas da barra */
 }
+
+.copy-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: transparent;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.copy-btn:hover {
+    background: #0056b3;
+}
