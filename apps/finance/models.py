@@ -1,3 +1,4 @@
+from apps.finance.managers import DebtManager
 from core.models import BaseModel
 from django.db import models
 from dateutil.relativedelta import relativedelta
@@ -29,6 +30,8 @@ class Debt(BaseModel):
         blank=True,
         null=True
     )
+
+    objects = DebtManager()
 
     class Meta:
         verbose_name = 'Dívida'

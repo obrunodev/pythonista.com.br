@@ -54,7 +54,7 @@
                                     {{ transaction.due_date|default:"Sem data de vencimento" }}
                                 {% endif %}
                             </td>
-                            <td>{{ transaction.category }}</td>
+                            <td>{{ transaction.category|default:"Sem categoria" }}</td>
                             <td class="text-{% if transaction.transaction_type == 'expense' %}danger{% else %}success{% endif %}">
                                 {{ transaction.get_transaction_type_display }}
                             </td>
@@ -76,7 +76,7 @@
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="6" class="text-center">
+                            <td colspan="7" class="text-center">
                                 {% if request.GET.q or request.GET.f %}
                                     Nenhum resultado encontrado.
                                 {% else %}

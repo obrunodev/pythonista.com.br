@@ -51,14 +51,7 @@ class DebtListView(ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        qs = super().get_queryset()
-        qs = qs.annotate(
-            paid_transactions_count=Count(
-                'transaction',
-                filter=Q(transaction__is_paid=True)
-            )
-        )
-        return qs
+        return Debt.objects.get_all_pending_debts()
 
 
 class DebtCreateView(CreateView):
