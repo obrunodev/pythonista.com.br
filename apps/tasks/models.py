@@ -1,3 +1,4 @@
+from apps.tasks.managers import TaskManager
 from core.models import BaseModel
 from django.db import models
 
@@ -14,6 +15,8 @@ class Task(BaseModel):
     status = models.CharField('Status', max_length=100, choices=TaskStatus.choices, default=TaskStatus.BACKLOG)
     description = models.TextField('Descrição', blank=True, null=True)
     due_date = models.DateField('Data de entrega', blank=True, null=True)
+
+    objects = TaskManager()
 
     class Meta:
         ordering = ['status', 'due_date']
