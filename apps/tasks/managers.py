@@ -9,7 +9,10 @@ class TaskManager(models.Manager):
         today = timezone.now().date()
         queryset = self.all()
         if q := request.GET.get('q'): queryset = queryset.filter(title__icontains=q)
-        if f := request.GET.get('f'): queryset = queryset.filter(status=f)
+        if f := request.GET.get('f'):
+            queryset = queryset.filter(status=f)
+        else:
+            queryset = queryset.exclude(status__in=['backlog', 'done'])
         for obj in queryset:
             if obj.due_date is None:
                 obj.is_late = False
