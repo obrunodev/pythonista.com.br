@@ -68,7 +68,10 @@
                                     </button>
                                 </form>
                             </td>
-                            <td>{{ task.due_date|default:"Não definida" }}</td>
+                            <td
+                                {% if task.is_late %}class="text-danger"{% endif %}>
+                                {{ task.due_date|default:"Não definida" }}
+                            </td>
                             <td class="text-end">
                                 <a href="{% url "tasks:detail" task.pk %}" class="ms-2">
                                     <i class='bx bx-show'></i>
