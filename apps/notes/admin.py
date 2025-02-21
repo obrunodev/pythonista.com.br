@@ -9,5 +9,9 @@ class NoteAdmin(admin.ModelAdmin):
 
 @admin.register(NoteTag)
 class NoteTagAdmin(admin.ModelAdmin):
-    list_display = ['name', 'color_class']
+    list_display = ['name', 'color_class', 'used_count']
+    readonly_fields = ['used_count']
     search_fields = ['name']
+
+    def used_count(self, obj):
+        return obj.note_set.count()
