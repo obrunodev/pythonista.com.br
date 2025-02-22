@@ -1,7 +1,8 @@
 from apps.finance.managers import DebtManager, TransactionManager
 from core.models import BaseModel
-from django.db import models
 from dateutil.relativedelta import relativedelta
+from django.db import models
+from django.contrib.auth.models import User
 
 
 class TransactionCategory(BaseModel):
@@ -17,6 +18,7 @@ class TransactionCategory(BaseModel):
 
 
 class Debt(BaseModel):
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     description = models.CharField('Descrição da dívida', max_length=255)
     total_value = models.DecimalField('Valor total da dívida', max_digits=10, decimal_places=2)
     installment_count = models.PositiveIntegerField('Número de parcelas')
@@ -49,6 +51,7 @@ class Debt(BaseModel):
         for i in range(self.installment_count):
             due_date = self.first_due_date + relativedelta(months=i)
             transaction = Transaction(
+                owner=self.owner,
                 debt=self,
                 transaction_type=Transaction.TransactionType.EXPENSE,
                 value=installment_value,
@@ -67,6 +70,7 @@ class Transaction(BaseModel):
         INCOME = 'income', 'Entrada'
         EXPENSE = 'expense', 'Despesa'
     
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     debt = models.ForeignKey(Debt, on_delete=models.CASCADE, blank=True, null=True)
     is_permanent = models.BooleanField('É permanente?', default=False)
     is_paid = models.BooleanField('Está pago?', default=False)

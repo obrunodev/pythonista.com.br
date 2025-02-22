@@ -36,6 +36,7 @@
                         <th>Descrição</th>
                         <th>Valor</th>
                         <th>Data de vencimento</th>
+                        <th>Responsável</th>
                         <th>Categoria</th>
                         <th>Tipo</th>
                         <th>Pago</th>
@@ -54,16 +55,19 @@
                                     {{ transaction.due_date|default:"Sem data de vencimento" }}
                                 {% endif %}
                             </td>
+                            <td>{{ transaction.owner.get_full_name|default:"<span class='text-info'>Não definido</span>" }}</td>
                             <td>{{ transaction.category|default:"Sem categoria" }}</td>
-                            <td class="text-{% if transaction.transaction_type == 'expense' %}danger{% else %}success{% endif %}">
-                                {{ transaction.get_transaction_type_display }}
+                            <td>
+                                {% with transaction.get_transaction_type_display as display_text %}
+                                    <span class="badge badge-{% if transaction.transaction_type == 'expense' %}danger{% else %}success{% endif %}">
+                                        {{ display_text }}
+                                    </span>
+                                {% endwith %}
                             </td>
                             <td>
-                                {% if transaction.is_paid %}
-                                    <span class="badge badge-success">S</span>
-                                {% else %}
-                                    <span class="badge badge-danger">N</span>
-                                {% endif %}
+                                <span class="badge badge-{% if transaction.is_paid %}success{% else %}danger{% endif %}">
+                                    {{ transaction.is_paid|yesno:"Sim,Não" }}
+                                </span>
                             </td>
                             <td class="text-end">
                                 <button type="button" class="btn btn-text text-success m-0 p-0 ms-2" data-bs-toggle="modal" data-bs-target="#paidModal{{ transaction.id }}">
