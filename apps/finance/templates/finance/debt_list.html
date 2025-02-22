@@ -1,0 +1,82 @@
+{% extends "layout/base.html" %}
+
+{% block title %}Dívidas{% endblock title %}
+
+{% block content %}
+
+    {% include "partials/page_header.html" with page_section="Dívidas" %}
+
+    <div class="d-flex justify-content-end">
+        <a href="{% url "finance:debt_create" %}" class="btn btn-primary btn-sm mb-3">Nova dívida</a>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            <form method="get">
+                <select name="debt_status" class="form-select">
+                    <option value="not_paid">Em aberto</option>
+                    <option value="paid" {% if request.GET.debt_status == 'paid' %}selected{% endif %}>Quitado</option>
+                </select>
+                <div class="text-end my-2">
+                    <button type="submit" class="btn btn-primary text-end">Filtrar</button>
+                </div>
+            </form>
+
+            <table class="table table-responsive-md table-striped">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Valor total</th>
+                        <th>Parcelas pagas</th>
+                        <th>Categoria</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for debt in debts %}
+                        <tr>
+                            <td>{{ debt.description|truncatechars:30 }}</td>
+                            <td>R$ {{ debt.total_value }}</td>
+                            <td>
+                                {% if debt.paid_transactions_count == debt.installment_count %}
+                                    <span class="badge badge-success">
+                                        {{ debt.paid_transactions_count }}/{{ debt.installment_count }}
+                                    </span>
+                                {% else %}
+                                    {{ debt.paid_transactions_count }}/{{ debt.installment_count }}
+                                {% endif %}
+                            </td>
+                            <td>{{ debt.category|default:"Sem categoria" }}</td>
+                            <td class="text-end">
+                                <a href="{% url "finance:debt_detail" debt.id %}" class="ms-2">
+                                    <i class='bx bx-list-ul'></i>
+                                </a>
+                                <a href="#" class="ms-2">
+                                    <i class='bx bx-edit'></i>
+                                </a>
+                                <a href="#" class="ms-2 text-danger">
+                                    <i class='bx bx-trash' ></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                {% if request.GET.q or request.GET.f %}
+                                    Nenhum resultado encontrado.
+                                {% else %}
+                                    Nenhuma dívida cadastrada.
+                                    <a href="{% url "finance:debt_create" %}">
+                                        Criar uma dívida
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% include "partials/pagination.html" %}
+        </div>
+    </div>
+
+{% endblock content %}
