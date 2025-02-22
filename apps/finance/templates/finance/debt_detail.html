@@ -1,0 +1,52 @@
+{% extends "layout/base.html" %}
+
+{% block title %}Detalhes da dívida{% endblock title %}
+
+{% block content %}
+
+    {% include "partials/page_header.html" with page_section="Detalhes da dívida" %}
+
+    <div class="card">
+        <div class="card-body">
+            <h3>{{ debt.description }}</h3>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Valor total: R$ {{ debt.total_value }}</p>
+                </div>
+                <div class="col-md-4">
+                    <p>Responsável: {{ debt.owner.get_full_name|default:"Não definido" }}</p>
+                </div>
+                <div class="col-md-4">
+                    <p>Número de parcelas: {{ debt.installment_count }}</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <h4>Parcelas</h4>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Valor da parcela</th>
+                        <th>Vencimento</th>
+                        <th>Foi pago?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in debt.transaction_set.all|dictsort:"due_date" %}
+                        <tr>
+                            <td>{{ t.description }}</td>
+                            <td>R$ {{ t.value }}</td>
+                            <td>{{ t.due_date }}</td>
+                            <td>{{ t.is_paid|yesno:"Sim,Não" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock content %}

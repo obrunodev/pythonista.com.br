@@ -30,6 +30,9 @@
                             <td>{{ debt.paid_transactions_count }}/{{ debt.installment_count }}</td>
                             <td>{{ debt.category|default:"Sem categoria" }}</td>
                             <td class="text-end">
+                                <a href="{% url "finance:debt_detail" debt.id %}" class="ms-2">
+                                    <i class='bx bx-list-ul'></i>
+                                </a>
                                 <a href="#" class="ms-2">
                                     <i class='bx bx-edit'></i>
                                 </a>

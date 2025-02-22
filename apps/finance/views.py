@@ -2,7 +2,7 @@ from apps.finance.forms import DebtForm, TransactionForm
 from apps.finance.models import Debt, Transaction
 from apps.finance.utils import get_month_balance, get_selected_month_year, get_month_navigation
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DetailView
 from django.views import View
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
@@ -57,3 +57,8 @@ class DebtCreateView(CreateView):
         response = super().form_valid(form)
         self.object.generate_transations()
         return response
+
+
+class DebtDetailView(DetailView):
+    model = Debt
+    context_object_name = 'debt'
