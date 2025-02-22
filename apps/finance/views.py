@@ -2,7 +2,7 @@ from apps.finance.forms import DebtForm, TransactionForm
 from apps.finance.models import Debt, Transaction
 from apps.finance.utils import get_month_balance, get_selected_month_year, get_month_navigation
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from django.views import View
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
@@ -31,6 +31,12 @@ class TransactionCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('finance:transaction_list')
 
 
+class TransactionUpdateView(LoginRequiredMixin, UpdateView):
+    model = Transaction
+    form_class = TransactionForm
+    success_url = reverse_lazy('finance:transaction_list')
+
+
 class TransactionIsPaidView(LoginRequiredMixin, View):
 
     def post(self, request, transaction_id):
@@ -39,7 +45,7 @@ class TransactionIsPaidView(LoginRequiredMixin, View):
         return redirect('finance:transaction_list')
 
 
-class DebtListView(ListView):
+class DebtListView(LoginRequiredMixin, ListView):
     model = Debt
     context_object_name = 'debts'
     paginate_by = 20
@@ -48,7 +54,7 @@ class DebtListView(ListView):
         return Debt.objects.get_all_pending_debts()
 
 
-class DebtCreateView(CreateView):
+class DebtCreateView(LoginRequiredMixin, CreateView):
     model = Debt
     form_class = DebtForm
     success_url = reverse_lazy('finance:debt_list')
@@ -59,6 +65,6 @@ class DebtCreateView(CreateView):
         return response
 
 
-class DebtDetailView(DetailView):
+class DebtDetailView(LoginRequiredMixin, DetailView):
     model = Debt
     context_object_name = 'debt'
