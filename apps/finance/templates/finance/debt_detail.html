@@ -41,7 +41,11 @@
                             <td>{{ t.description }}</td>
                             <td>R$ {{ t.value }}</td>
                             <td>{{ t.due_date }}</td>
-                            <td>{{ t.is_paid|yesno:"Sim,Não" }}</td>
+                            <td>
+                                <span class="badge badge">
+                                    {{ t.is_paid|yesno:"Sim,Não" }}
+                                </span>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

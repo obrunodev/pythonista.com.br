@@ -4,9 +4,10 @@ from django.db.models import Count, Q
 
 class DebtManager(models.Manager):
 
-    def get_all_pending_debts(self):
+    def get_all_pending_debts(self, request):
         """Retorna todas as dívidas pendentes, se houver filtro aplicado, retorna as dívidas filtradas."""
-        queryset = self.filter(is_paid=False)
+        debt_status = request.GET.get('debt_status') == 'paid'
+        queryset = self.filter(is_paid=debt_status)
         return queryset.annotate(
             paid_transactions_count=Count(
                 'transaction',

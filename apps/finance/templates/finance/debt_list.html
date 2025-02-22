@@ -12,6 +12,16 @@
     
     <div class="card">
         <div class="card-body">
+            <form method="get">
+                <select name="debt_status" class="form-select">
+                    <option value="not_paid">Em aberto</option>
+                    <option value="paid" {% if request.GET.debt_status == 'paid' %}selected{% endif %}>Quitado</option>
+                </select>
+                <div class="text-end my-2">
+                    <button type="submit" class="btn btn-primary text-end">Filtrar</button>
+                </div>
+            </form>
+
             <table class="table table-responsive-md table-striped">
                 <thead>
                     <tr>
@@ -27,7 +37,15 @@
                         <tr>
                             <td>{{ debt.description|truncatechars:30 }}</td>
                             <td>R$ {{ debt.total_value }}</td>
-                            <td>{{ debt.paid_transactions_count }}/{{ debt.installment_count }}</td>
+                            <td>
+                                {% if debt.paid_transactions_count == debt.installment_count %}
+                                    <span class="badge badge-success">
+                                        {{ debt.paid_transactions_count }}/{{ debt.installment_count }}
+                                    </span>
+                                {% else %}
+                                    {{ debt.paid_transactions_count }}/{{ debt.installment_count }}
+                                {% endif %}
+                            </td>
                             <td>{{ debt.category|default:"Sem categoria" }}</td>
                             <td class="text-end">
                                 <a href="{% url "finance:debt_detail" debt.id %}" class="ms-2">

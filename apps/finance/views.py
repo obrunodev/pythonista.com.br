@@ -51,7 +51,7 @@ class DebtListView(LoginRequiredMixin, ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        return Debt.objects.get_all_pending_debts()
+        return Debt.objects.get_all_pending_debts(request=self.request)
 
 
 class DebtCreateView(LoginRequiredMixin, CreateView):
