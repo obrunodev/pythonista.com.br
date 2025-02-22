@@ -1,10 +1,12 @@
 from apps.finance.forms import DebtForm, TransactionForm
 from apps.finance.models import Debt, Transaction
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Count, Q
+from django.db.models import Q
 from django.views.generic import ListView, CreateView
+from django.views import View
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.shortcuts import get_object_or_404, redirect
 from shared.mappings import months_mapping
 
 
@@ -43,6 +45,14 @@ class TransactionCreateView(LoginRequiredMixin, CreateView):
     model = Transaction
     form_class = TransactionForm
     success_url = reverse_lazy('finance:transaction_list')
+
+
+class TransactionIsPaidView(LoginRequiredMixin, View):
+
+    def post(self, request, transaction_id):
+        transaction = get_object_or_404(Transaction, id=transaction_id)
+        transaction.set_transaction_to_paid()
+        return redirect('finance:transaction_list')
 
 
 class DebtListView(ListView):

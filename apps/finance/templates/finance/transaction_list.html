@@ -66,6 +66,30 @@
                                 {% endif %}
                             </td>
                             <td class="text-end">
+                                <button type="button" class="btn btn-text text-success m-0 p-0 ms-2" data-bs-toggle="modal" data-bs-target="#paidModal{{ transaction.id }}">
+                                    <i class='bx bx-money'></i>
+                                </button>
+                                  
+                                <div class="modal fade" id="paidModal{{ transaction.id }}" tabindex="-1" aria-labelledby="paidModal{{ transaction.id }}Label" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                            <div class="modal-body text-start">
+                                                <p>Você já efetuou o pagamento desta transação?</p>
+                                                <p>Descrição da transação: {{ transaction.description }}</p>
+                                                <p>Valor: R$ {{ transaction.value }}</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <form action="{% url "finance:transaction_is_paid" transaction.id %}" method="post">
+                                                    {% csrf_token %}
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-success btn-sm"
+                                                        name="is_paid">Confirmar pagamento $</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <a href="#" class="ms-2">
                                     <i class='bx bx-edit'></i>
                                 </a>

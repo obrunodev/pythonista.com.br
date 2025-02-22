@@ -34,6 +34,7 @@ class Debt(BaseModel):
     objects = DebtManager()
 
     class Meta:
+        ordering = ['-first_due_date']
         verbose_name = 'Dívida'
         verbose_name_plural = 'Dívidas'
     
@@ -89,3 +90,13 @@ class Transaction(BaseModel):
     
     def __str__(self):
         return f'{self.get_transaction_type_display()} - R$ {self.value}'
+    
+    def set_transaction_to_paid(self):
+        """Marca a transação como quitada, e verifica se ela é vinculada a uma dívida."""
+        self.is_paid = True
+        self.save()
+
+        if self.debt:  # Se possui débitos, verifica se todas as parcelas foram quitadas
+            if not self.debt.transaction_set.filter(is_paid=False).exists():
+                self.debt.is_paid = True
+                self.debt.save()
