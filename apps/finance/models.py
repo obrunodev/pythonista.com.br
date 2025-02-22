@@ -1,4 +1,4 @@
-from apps.finance.managers import DebtManager
+from apps.finance.managers import DebtManager, TransactionManager
 from core.models import BaseModel
 from django.db import models
 from dateutil.relativedelta import relativedelta
@@ -82,6 +82,8 @@ class Transaction(BaseModel):
         null=True
     )
     due_date = models.DateField('Data de vencimento', blank=True, null=True)
+
+    objects = TransactionManager()
 
     class Meta:
         ordering = ['-due_date']

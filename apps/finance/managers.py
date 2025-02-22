@@ -13,3 +13,13 @@ class DebtManager(models.Manager):
                 filter=Q(transaction__is_paid=True)
             )
         )
+
+
+class TransactionManager(models.Manager):
+
+    def get_monthly_transactions(self, selected_month, selected_year):
+        """Retorna todas as transações pendentes, se houver filtro aplicado, retorna as transações filtradas."""
+        return self.filter(
+            Q(due_date__month=selected_month, due_date__year=selected_year) |
+            Q(is_permanent=True),
+        )
