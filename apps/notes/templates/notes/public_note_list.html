@@ -7,6 +7,14 @@
     {% include "partials/navbar.html" %}
 
     <div class="container mt-5" style="max-width: 800px;">
+        <form method="get">
+            <input
+                type="text"
+                name="q"
+                placeholder="Pesquisar artigo"
+                class="form-control mb-5"
+                value="{{ request.GET.q }}">
+        </form>
         <ul class="list-unstyled">
             {% for note in notes %}
                 <li class="mb-2">
@@ -14,14 +22,26 @@
                         {{ forloop.counter }}. <a href="#" class="text-dark">{{ note.title }}</a>
                         <span class="float-end">
                             {% for tag in note.tags.all %}
-                                <span class="float-end badge badge-{{ tag.color_class }} ms-1">{{ tag.name }}</span>
+                                <span class="float-end badge badge-{{ tag.color_class }} ms-1">
+                                    {{ tag.name }}
+                                </span>
+                            {% empty %}
+                                <span class="float-end badge badge-info ms-1">
+                                    Sem tags
+                                </span>
                             {% endfor %}
                         </span>
                     </p>
                     <p class="text-muted ms-3"><small>{{ note.author.get_full_name|default:"Sem autor" }} - {{ note.created_ago }}</small></p>
                 </li>
             {% empty %}
-                <li>Nenhum artigo até o momento.</li>
+                <li class="text-center">
+                    {% if request.GET.q %}
+                        Nenhum artigo encontrado.
+                    {% else %}
+                        Nenhum artigo até o momento.
+                    {% endif %}
+                </li>
             {% endfor %}
         </ul>
 
