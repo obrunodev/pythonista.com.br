@@ -1,0 +1,24 @@
+{% extends "layout/public_base.html" %}
+
+{% load render_md static %}
+
+{% block title %}{{ note.title }}{% endblock title %}
+
+{% block content %}
+    {% include "partials/navbar.html" %}
+
+    <link rel="stylesheet" type="text/css" href="{% static "css/codehilite.css" %}">
+
+    <div class="container mt-5" style="max-width: 800px;">
+        <div class="post-info">
+            <span class="badge bg-info me-2">
+                {{ note.author.get_full_name|default:"Sem autor" }}
+            </span>
+            <small>{{ times_ago }}</small>
+        </div>
+        <h3><strong>{{ note.title|default:"Sem título" }}</strong></h3>	
+        {{ note.content|render_markdown }}
+    </div>
+
+    {% include "notes/partials/click_to_copy.html" %}
+{% endblock content %}

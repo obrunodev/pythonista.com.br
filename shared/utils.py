@@ -21,7 +21,7 @@ def prettify_created_at(created_at):
         return f"Há {diferenca.days} dia{'s' if diferenca.days > 1 else ''}"
     elif diferenca.days < 365:
         meses = diferenca.days // 30
-        return f"Há {meses} mês{'es' if meses > 1 else ''}"
+        return f"Há {meses} {'meses' if meses > 1 else 'mês'}"
     else:
         anos = diferenca.days // 365
         return f"Há {anos} ano{'s' if anos > 1 else ''}"

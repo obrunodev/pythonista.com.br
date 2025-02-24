@@ -3,6 +3,7 @@ from apps.notes.forms import NoteForm
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from shared.utils import prettify_created_at
 
 
 class NoteListView(LoginRequiredMixin, ListView):
@@ -54,3 +55,14 @@ class PublicNotesListView(ListView):
 
     def get_queryset(self):
         return Note.objects.get_public_notes(self.request)
+
+
+class PublicNotesDetailView(DetailView):
+    template_name = 'notes/public_note_detail.html'
+    model = Note
+    context_object_name = 'note'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['times_ago'] = prettify_created_at(context['note'].created_at)
+        return context

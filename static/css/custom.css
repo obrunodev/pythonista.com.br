@@ -47,3 +47,5 @@
 .copy-btn:hover {
     background: #0056b3;
 }
+
+.custom-link:hover { text-decoration: underline; }

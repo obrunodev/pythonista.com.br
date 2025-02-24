@@ -19,7 +19,10 @@
             {% for note in notes %}
                 <li class="mb-2">
                     <p class="mb-0">
-                        {{ forloop.counter }}. <a href="#" class="text-dark">{{ note.title }}</a>
+                        {{ forloop.counter }}.
+                        <a href="{% url "notes:public_detail" note.id %}" class="text-dark custom-link">
+                            {{ note.title }}
+                        </a>
                         <span class="float-end">
                             {% for tag in note.tags.all %}
                                 <span class="float-end badge badge-{{ tag.color_class }} ms-1">
@@ -32,8 +35,15 @@
                             {% endfor %}
                         </span>
                     </p>
-                    <p class="text-muted ms-3"><small>{{ note.author.get_full_name|default:"Sem autor" }} - {{ note.created_ago }}</small></p>
+                    <p class="text-muted ms-3 mb-1">
+                        <small>
+                            {{ note.author.get_full_name|default:"Sem autor" }} - {{ note.created_ago }}
+                        </small>
+                    </p>
                 </li>
+                {% if not forloop.last %}
+                    <hr class="bg-dark my-2">
+                {% endif %}
             {% empty %}
                 <li class="text-center">
                     {% if request.GET.q %}

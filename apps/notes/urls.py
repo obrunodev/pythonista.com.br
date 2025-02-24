@@ -10,5 +10,6 @@ urlpatterns = [
     path('<int:pk>/update/', views.NoteUpdateView.as_view(), name='update'),
     path('<int:pk>/delete/', views.NoteDeleteView.as_view(), name='delete'),
     path('public/', views.PublicNotesListView.as_view(), name='public_list'),
+    path('public/<int:pk>/', views.PublicNotesDetailView.as_view(), name='public_detail'),
 ]
 
