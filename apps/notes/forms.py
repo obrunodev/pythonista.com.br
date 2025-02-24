@@ -6,4 +6,4 @@ class NoteForm(BaseModelForm):
 
     class Meta:
         model = Note
-        fields = ['title', 'content', 'tags']
+        fields = ['title', 'content', 'tags', 'is_public']

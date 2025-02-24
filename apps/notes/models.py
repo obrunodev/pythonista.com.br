@@ -1,5 +1,7 @@
+from apps.notes.managers import NoteManager
 from core.models import BaseModel
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class NoteTag(BaseModel):
@@ -20,9 +22,13 @@ class NoteTag(BaseModel):
 
 
 class Note(BaseModel):
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     title = models.CharField('Título', max_length=100, blank=True, null=True)
     content = models.TextField('Conteúdo')
     tags = models.ManyToManyField(NoteTag, blank=True)
+    is_public = models.BooleanField('É público?', default=False)
+
+    objects = NoteManager()
 
     class Meta:
         ordering = ['title']
