@@ -18,6 +18,7 @@
                     </div>
                     <div class="col-md-3">
                         <select name="f" class="form-select">
+                            <option value="">---</option>
                             {% for tag in tags_list %}
                                 <option value="{{ tag }}" {% if request.GET.f == tag %}selected{% endif %}>{{ tag }}</option>
                             {% endfor %}
