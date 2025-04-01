@@ -6,7 +6,14 @@
     {% include "partials/page_header.html" with page_section="Anotações" %}
 
     <div class="d-flex justify-content-end">
-        <a href="{% url "notes:create" %}" class="btn btn-primary btn-sm mb-3">Nova anotação</a>
+        <a href="{% url "notes:create_folder" %}?folder_id={{ request.GET.folder }}" class="btn btn-primary btn-sm mb-3 me-2">
+            <i class='bx bx-folder'></i>
+            Criar pasta
+        </a>
+        <a href="{% url "notes:create" %}?folder_id={{ request.GET.folder }}" class="btn btn-primary btn-sm mb-3">
+            <i class='bx bx-plus-circle'></i>
+            Nova anotação
+        </a>
     </div>
     
     <div class="card">
@@ -29,6 +36,30 @@
                     </div>
                 </div>
             </form>
+
+            {% if selected_folder %}
+                <p>
+                    <strong>Pasta:</strong>
+                    {{ selected_folder }}
+                    <a href="{% url "notes:delete_folder" selected_folder.id %}">
+                        <i class='bx bx-folder-minus text-danger'></i>
+                    </a>
+                </p>
+            {% endif %}
+
+            {% if folders %}
+                <div class="row my-3">
+                    {% for folder in folders %}
+                        <div class="col-md-2">
+                            <a href="{% url "notes:list" %}?folder={{ folder.id }}" class="btn btn-dark w-100 bg-transparent text-dark">
+                                <i class='bx bx-folder'></i>
+                                {{ folder.name }}
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             <table class="table table-responsive-md table-striped">
                 <thead>
                     <tr>

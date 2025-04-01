@@ -1,10 +1,10 @@
 {% extends "layout/base.html" %}
 
-{% block title %}Nova anotação{% endblock title %}
+{% block title %}Nova pasta{% endblock title %}
 
 {% block content %}
 
-    {% include "partials/page_header.html" with page_section="Nova anotação" %}
+    {% include "partials/page_header.html" with page_section="Nova pasta" %}
 
     <div class="card">
         <div class="card-body">
@@ -12,7 +12,7 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit" class="btn btn-primary btn-sm mt-2" name="folder_id" value="{{ request.GET.folder_id }}">
-                    {% if note %}Atualizar{% else %}Salvar{% endif %}
+                    {% if note %}Atualizar{% else %}Criar{% endif %}
                 </button>
                 <a href="{% url "notes:list" %}" class="btn btn-secondary btn-sm mt-2">Cancelar</a>
             </form>

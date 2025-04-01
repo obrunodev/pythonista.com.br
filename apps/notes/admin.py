@@ -1,4 +1,4 @@
-from apps.notes.models import Note, NoteTag
+from apps.notes.models import Note, NoteTag, Folder
 from django.contrib import admin
 
 
@@ -15,3 +15,8 @@ class NoteTagAdmin(admin.ModelAdmin):
 
     def used_count(self, obj):
         return obj.note_set.count()
+
+
+@admin.register(Folder)
+class FolderAdmin(admin.ModelAdmin):
+    ...
