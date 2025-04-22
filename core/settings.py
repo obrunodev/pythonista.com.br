@@ -19,7 +19,6 @@ INSTALLED_APPS = [
     'apps.chatbot',
     'apps.finance',
     'apps.notes',
-    'apps.tasks',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +79,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 LOGIN_URL = 'users:login'
-LOGIN_REDIRECT_URL = 'tasks:list'
-LOGOUT_REDIRECT_URL = 'tasks:list'
+LOGIN_REDIRECT_URL = 'notes:list'
+LOGOUT_REDIRECT_URL = 'notes:list'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

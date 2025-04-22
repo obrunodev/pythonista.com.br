@@ -9,7 +9,6 @@ urlpatterns = [
     path('chat/', include('apps.chatbot.urls')),
     path('finance/', include('apps.finance.urls')),
     path('notes/', include('apps.notes.urls')),
-    path('tasks/', include('apps.tasks.urls')),
 ]
 
 if settings.DEBUG is False:  # Apenas se DEBUG=False
